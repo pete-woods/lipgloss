@@ -60,6 +60,7 @@ type Table struct {
 	data        Data
 
 	width           int
+	fitContent      bool
 	height          int
 	useManualHeight bool
 	yOffset         int
@@ -256,6 +257,18 @@ func (t *Table) GetBorderRow() bool {
 // approach.
 func (t *Table) Width(w int) *Table {
 	t.width = w
+	return t
+}
+
+// FitContent configures the table to render at its content width—the width
+// needed to fully fit its content, including cell padding and borders—rather
+// than expanding to fill the width set via [Table.Width].
+//
+// When combined with [Table.Width], the configured width acts as a maximum: the
+// table renders at its content width unless that exceeds the maximum, in which
+// case it's constrained to the maximum and its content is resized to fit.
+func (t *Table) FitContent() *Table {
+	t.fitContent = true
 	return t
 }
 
